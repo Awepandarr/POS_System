@@ -3,28 +3,28 @@
 erDiagram
     Customers {
         int customer_id PK
-        string customer_name
-        string customer_email
-        string contact
+        varchar customer_name
+        varchar customer_email
+        varchar contact
         int loyalty_points
     }
 
     Categories {
         int category_id PK
-        string name
-        string description
+        varchar name
+        varchar description
         boolean is_active
-        string category_type
+        varchar category_type
         datetime created_date
     }
 
     Products {
         int product_id PK
-        string name
+        varchar name
         decimal price
         int category_id FK
         int stock_quantity
-        string barcode
+        varchar barcode
     }
 
     Orders {
@@ -37,6 +37,7 @@ erDiagram
         decimal tax_amount
         decimal final_amount
         decimal discount_amount
+        varchar delivery_type
     }
 
     Order_Items {
@@ -55,7 +56,7 @@ erDiagram
         enum payment_type
         enum payment_status
         datetime payment_date
-        string transaction_id
+        varchar transaction_id
     }
 
     Invoices {
@@ -74,7 +75,7 @@ erDiagram
         int order_id FK
         int invoice_id FK
         decimal refund_amount
-        string refund_reason
+        varchar refund_reason
         datetime refund_date
         enum refund_status
     }
@@ -85,16 +86,27 @@ erDiagram
         decimal total_sales
         decimal total_payments
         decimal total_discounts
-        string payment_breakdown
+        text payment_breakdown
     }
 
-    %% Relationships
+    DeliveryCharge {
+        int charge_id PK
+        varchar delivery_type
+        decimal delivery_cost
+        varchar delivery_address
+        int order_id FK
+    }
+
     Customers ||--o| Orders : places
-    Categories ||--o| Products : contains
-    Products ||--o| Order_Items : listed_in
     Orders ||--o| Order_Items : contains
-    Orders ||--o| Payments : includes
+    Order_Items ||--o| Products : includes
+    Orders ||--o| Payments : has
     Orders ||--o| Invoices : generates
-    Orders ||--o| Refunds : has_refund
-    Orders ||--o| EndOfDayReport : reports
-    Invoices ||--o| Refunds : refunded_by
+    Orders ||--o| Refunds : has
+    Orders ||--o| DeliveryCharge : has
+    Payments ||--o| Orders : paid_for
+    Invoices ||--o| Customers : generated_for
+    Refunds ||--o| Orders : refunded_from
+    Refunds ||--o| Invoices : linked_to
+    Products ||--o| Categories : belongs_to
+    EndOfDayReport ||--o| Orders : summarizes
