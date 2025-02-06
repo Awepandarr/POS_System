@@ -1,66 +1,100 @@
 # POS_System
 ```mermaid
 erDiagram
-    Customer {
+    Customers {
         int customer_id PK
         string customer_name
-        string contact_info
-        string address
-        string loyalty_points
+        string customer_email
+        string contact
+        int loyalty_points
     }
-    Order {
+
+    Categories {
+        int category_id PK
+        string name
+        string description
+        boolean is_active
+        string category_type
+        datetime created_date
+    }
+
+    Products {
+        int product_id PK
+        string name
+        decimal price
+        int category_id FK
+        int stock_quantity
+        string barcode
+    }
+
+    Orders {
         int order_id PK
         int customer_id FK
         datetime order_date
-        string order_status
-        float total_amount
-        string shipping_address
-        string billing_address
-        string payment_method
-        string order_notes
-        datetime estimated_delivery_date
-        int delivery_agent_id FK
+        decimal total_amount
+        enum payment_status
+        enum order_type
+        decimal tax_amount
+        decimal final_amount
+        decimal discount_amount
     }
-    OrderItem {
+
+    Order_Items {
         int order_item_id PK
         int order_id FK
         int product_id FK
         int quantity
-        float price
+        decimal subtotal
+        decimal price
     }
-    Product {
-        int product_id PK
-        string product_name
-        string description
-        float price
-        int stock_quantity
-        int category_id FK
-        int supplier_id FK
-    }
-    Category {
-        int category_id PK
-        string category_name
-        string description
-    }
-    Supplier {
-        int supplier_id PK
-        string supplier_name
-        string contact_info
-    }
-    Payment {
+
+    Payments {
         int payment_id PK
         int order_id FK
-        float amount
+        decimal payment_amount
+        enum payment_type
+        enum payment_status
         datetime payment_date
-        string payment_status
         string transaction_id
     }
 
-    Customer ||--o| Order : places
-    Order ||--o| OrderItem : contains
-    Product ||--o| OrderItem : appears_in
-    Category ||--o| Product : classifies
-    Supplier ||--o| Product : supplies
-    Order ||--o| Payment : has
-    Order ||--o| Payment : receives
-    Order ||--o| Customer : belongs_to
+    Invoices {
+        int invoice_id PK
+        int order_id FK
+        datetime date_issued
+        decimal subtotal
+        decimal discount
+        decimal tax_amount
+        decimal final_amount
+        int customer_id FK
+    }
+
+    Refunds {
+        int refund_id PK
+        int order_id FK
+        int invoice_id FK
+        decimal refund_amount
+        string refund_reason
+        datetime refund_date
+        enum refund_status
+    }
+
+    EndOfDayReport {
+        int report_id PK
+        date date
+        decimal total_sales
+        decimal total_payments
+        decimal total_discounts
+        string payment_breakdown
+    }
+
+    %% Relationships
+    Customers ||--o| Orders : places
+    Categories ||--o| Products : contains
+    Products ||--o| Order_Items : listed_in
+    Orders ||--o| Order_Items : contains
+    Orders ||--o| Payments : includes
+    Orders ||--o| Invoices : generates
+    Orders ||--o| Refunds : has_refund
+    Orders ||--o| EndOfDayReport : reports
+    Invoices ||--o| Refunds : refunded_by
