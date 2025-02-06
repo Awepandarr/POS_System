@@ -1,5 +1,5 @@
 # POS_System
-`mermaid`
+```mermaid
 erDiagram
     Customer {
         int customer_id PK
@@ -55,3 +55,12 @@ erDiagram
         string payment_status
         string transaction_id
     }
+
+    Customer ||--o| Order : places
+    Order ||--o| OrderItem : contains
+    Product ||--o| OrderItem : appears_in
+    Category ||--o| Product : classifies
+    Supplier ||--o| Product : supplies
+    Order ||--o| Payment : has
+    Order ||--o| Payment : receives
+    Order ||--o| Customer : belongs_to
