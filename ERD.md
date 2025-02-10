@@ -1,3 +1,10 @@
+# POS System Documentation
+
+## **ERD Diagram**
+```mermaid
+---
+title: POS System -ERD Class Diagram
+---
 ```mermaid
 %% ER Diagram
 erDiagram
