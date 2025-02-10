@@ -1,4 +1,6 @@
-# POS_System
+# POS System Documentation
+
+## **1. Entity-Relationship (ER) Diagram**
 ```mermaid
 erDiagram
     Customers {
@@ -112,7 +114,7 @@ erDiagram
     EndOfDayReport ||--o| Orders : summarizes
 
 
-
+## **2. UML Class Diagram**
 ```mermaid
 classDiagram
     class POS_System {
@@ -135,52 +137,11 @@ classDiagram
         removeProduct(product: Product): void
     }
 
-    class Payment {
-        paymentID: String
-        amount: double
-        paymentMethod: String
-        processPayment(): boolean
-    }
-
-    class BarcodeScanner {
-        scannerID: String
-        connectionType: String
-        scanBarcode(): String
-        identifyProduct(barcode: String): Product
-    }
-
-    class Receipt {
-        receiptID: String
-        transactionID: String
-        date: Date
-        generatePDF(): void
-    }
-
-    class EndOfDayReport {
-        reportID: String
-        date: Date
-        totalSales: double
-        totalTransactions: int
-        cashPayments: double
-        cardPayments: double
-        generateReport(): void
-        exportToPDF(): void
-        sendReport(email: String): void
-    }
-
-    class GUI {
-        screenType: String
-        theme: String
-        displayMenu(): void
-        showTransactionDetails(transaction: Transaction): void
-        printReceipt(receipt: Receipt): void
-    }
-
-    class User {
-        userID: String
-        name: String
-        role: String
-        login(username: String, password: String): boolean
+    class Order {
+        orderID: String
+        orderDate: Date
+        totalAmount: double
+        orderStatus: String
     }
 
     class Product {
@@ -188,79 +149,11 @@ classDiagram
         name: String
         price: double
         stockQuantity: int
-        updateStock(quantity: int): void
     }
 
-    class Customer {
-        customerID: String
-        name: String
-        email: String
-        contact: String
-        loyaltyPoints: int
-    }
+    POS_System --> Transaction
+    Transaction --> Order
+    Transaction --> Product
 
-    class Order {
-        orderID: String
-        orderDate: Date
-        totalAmount: double
-        paymentStatus: String
-        orderType: String
-        taxAmount: double
-        finalAmount: double
-        discountAmount: double
-        deliveryType: String
-        orderStatus: String
-    }
 
-    class Order_Items {
-        orderItemID: String
-        orderID: String
-        productID: String
-        quantity: int
-        price: double
-        subtotal: double
-    }
 
-    class Invoice {
-        invoiceID: String
-        orderID: String
-        dateIssued: Date
-        subtotal: double
-        discount: double
-        taxAmount: double
-        finalAmount: double
-        customerID: String
-    }
-
-    class Refund {
-        refundID: String
-        orderID: String
-        invoiceID: String
-        refundAmount: double
-        refundReason: String
-        refundDate: Date
-        refundStatus: String
-    }
-
-    class DeliveryCharge {
-        chargeID: String
-        deliveryType: String
-        deliveryCost: double
-        deliveryAddress: String
-        orderID: String
-    }
-
-    %% Relationships %%
-    POS_System --> Transaction : "1 *"
-    Transaction --> Payment : "1 1"
-    Transaction --> Receipt : "1 1"
-    Transaction --> Order_Items : "1 *"
-    Transaction --> Product : "1 *"
-    Order_Items --> Product : "1 1"
-    Transaction --> Customer : "1 1"
-    Payment --> Order : "1 1"
-    Order --> Invoice : "1 1"
-    Order --> Refund : "1 *"
-    Order --> DeliveryCharge : "1 1"
-    Refund --> Invoice : "1 1"
-    BarcodeScanner --> Product : "1 1"
