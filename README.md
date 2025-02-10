@@ -6,7 +6,7 @@ This project is a Point of Sale (POS) system designed to streamline transactions
 For detailed views of the system architecture, see the links below:
 
 - [UML Class Diagram](./UML.md)
-- [ER Diagram](./ERDiagram.md)
+- [ER Diagram](./ERD.md)
 
 ## Features
 - Transaction processing
