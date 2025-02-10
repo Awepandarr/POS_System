@@ -3,9 +3,8 @@
 ## **ERD Diagram**
 ```mermaid
 ---
-title: POS System -ERD Class Diagram
+title: POS System -ERDiagram
 ---
-```mermaid
 %% ER Diagram
 erDiagram
     Customers {
