@@ -2,6 +2,11 @@
 
 ## **1. Entity-Relationship (ER) Diagram**
 ```mermaid
+---
+title: POS System - ERD & UML Class Diagram
+---
+
+%% ER Diagram
 erDiagram
     Customers {
         int customer_id PK
@@ -113,6 +118,8 @@ erDiagram
     Refunds ||--o| Invoices : linked_to
     Products ||--o| Categories : belongs_to
     EndOfDayReport ||--o| Orders : summarizes
+
+%% UML Class Diagram
 classDiagram
     class POS_System {
         shopName String
@@ -126,7 +133,6 @@ classDiagram
         dateTime Date
         totalAmount double
         paymentMethod String
-        products List<Product>
         addProduct(product Product) void
         calculateTotal() double
         processPayment(payment Payment) boolean
