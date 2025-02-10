@@ -113,8 +113,7 @@ erDiagram
 
 
 
-
-
+```mermaid
 classDiagram
     class POS_System {
         shopName: String
