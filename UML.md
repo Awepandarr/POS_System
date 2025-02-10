@@ -1,9 +1,9 @@
 # POS System Documentation
 
-## **1. Entity-Relationship (ER) Diagram**
+## **UML Diagram**
 ```mermaid
 ---
-title: POS System - ERD & UML Class Diagram
+title: POS System -UML Class Diagram
 ---
 %% UML Class Diagram
 classDiagram
