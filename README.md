@@ -115,155 +115,143 @@ erDiagram
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 classDiagram
     class POS_System {
-        +String shopName
-        +String location
-        +startTransaction(): Transaction
-        +endOfDayReport(): EndOfDayReport
+        shopName: String
+        location: String
+        startTransaction(): Transaction
+        endOfDayReport(): EndOfDayReport
     }
 
     class Transaction {
-        +String transactionID
-        +Date dateTime
-        +double totalAmount
-        +String paymentMethod
-        +List<Product> products
-        +addProduct(product: Product): void
-        +calculateTotal(): double
-        +processPayment(payment: Payment): boolean
-        +generateReceipt(): Receipt
-        +removeProduct(product: Product): void
+        transactionID: String
+        dateTime: Date
+        totalAmount: double
+        paymentMethod: String
+        products: List<Product>
+        addProduct(product: Product): void
+        calculateTotal(): double
+        processPayment(payment: Payment): boolean
+        generateReceipt(): Receipt
+        removeProduct(product: Product): void
     }
 
     class Payment {
-        +String paymentID
-        +double amount
-        +String paymentMethod
-        +boolean processPayment(): boolean
+        paymentID: String
+        amount: double
+        paymentMethod: String
+        processPayment(): boolean
     }
 
     class BarcodeScanner {
-        +String scannerID
-        +String connectionType
-        +scanBarcode(): String
-        +identifyProduct(barcode: String): Product
+        scannerID: String
+        connectionType: String
+        scanBarcode(): String
+        identifyProduct(barcode: String): Product
     }
 
     class Receipt {
-        +String receiptID
-        +String transactionID
-        +Date date
-        +generatePDF(): void
+        receiptID: String
+        transactionID: String
+        date: Date
+        generatePDF(): void
     }
 
     class EndOfDayReport {
-        +String reportID
-        +Date date
-        +double totalSales
-        +int totalTransactions
-        +double cashPayments
-        +double cardPayments
-        +generateReport(): void
-        +exportToPDF(): void
-        +sendReport(email: String): void
+        reportID: String
+        date: Date
+        totalSales: double
+        totalTransactions: int
+        cashPayments: double
+        cardPayments: double
+        generateReport(): void
+        exportToPDF(): void
+        sendReport(email: String): void
     }
 
     class GUI {
-        +String screenType
-        +String theme
-        +displayMenu(): void
-        +showTransactionDetails(transaction: Transaction): void
-        +printReceipt(receipt: Receipt): void
+        screenType: String
+        theme: String
+        displayMenu(): void
+        showTransactionDetails(transaction: Transaction): void
+        printReceipt(receipt: Receipt): void
     }
 
     class User {
-        +String userID
-        +String name
-        +String role
-        +boolean login(username: String, password: String)
+        userID: String
+        name: String
+        role: String
+        login(username: String, password: String): boolean
     }
 
     class Product {
-        +String productID
-        +String name
-        +double price
-        +int stockQuantity
-        +updateStock(quantity: int): void
+        productID: String
+        name: String
+        price: double
+        stockQuantity: int
+        updateStock(quantity: int): void
     }
 
     class Customer {
-        +String customerID
-        +String name
-        +String email
-        +String contact
-        +int loyaltyPoints
+        customerID: String
+        name: String
+        email: String
+        contact: String
+        loyaltyPoints: int
     }
 
     class Order {
-        +String orderID
-        +Date orderDate
-        +double totalAmount
-        +String paymentStatus
-        +String orderType
-        +double taxAmount
-        +double finalAmount
-        +double discountAmount
-        +String deliveryType
-        +String orderStatus
+        orderID: String
+        orderDate: Date
+        totalAmount: double
+        paymentStatus: String
+        orderType: String
+        taxAmount: double
+        finalAmount: double
+        discountAmount: double
+        deliveryType: String
+        orderStatus: String
     }
 
     class Order_Items {
-        +String orderItemID
-        +String orderID
-        +String productID
-        +int quantity
-        +double price
-        +double subtotal
+        orderItemID: String
+        orderID: String
+        productID: String
+        quantity: int
+        price: double
+        subtotal: double
     }
 
     class Invoice {
-        +String invoiceID
-        +String orderID
-        +Date dateIssued
-        +double subtotal
-        +double discount
-        +double taxAmount
-        +double finalAmount
-        +String customerID
+        invoiceID: String
+        orderID: String
+        dateIssued: Date
+        subtotal: double
+        discount: double
+        taxAmount: double
+        finalAmount: double
+        customerID: String
     }
 
     class Refund {
-        +String refundID
-        +String orderID
-        +String invoiceID
-        +double refundAmount
-        +String refundReason
-        +Date refundDate
-        +String refundStatus
+        refundID: String
+        orderID: String
+        invoiceID: String
+        refundAmount: double
+        refundReason: String
+        refundDate: Date
+        refundStatus: String
     }
 
     class DeliveryCharge {
-        +String chargeID
-        +String deliveryType
-        +double deliveryCost
-        +String deliveryAddress
-        +String orderID
+        chargeID: String
+        deliveryType: String
+        deliveryCost: double
+        deliveryAddress: String
+        orderID: String
     }
 
-    %%% Relationships %%%
+    %% Relationships %%
     POS_System --> Transaction : "1 *"
     Transaction --> Payment : "1 1"
     Transaction --> Receipt : "1 1"
