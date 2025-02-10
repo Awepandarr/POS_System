@@ -14,6 +14,14 @@ classDiagram
         endOfDayReport(): EndOfDayReport
     }
 
+    class BarcodeScanner {
+        scannerID: String
+        status: String
+        scanBarcode(): String
+        connectToPOSSystem(): boolean
+        disconnectFromPOSSystem(): void
+    }
+
     class Transaction {
         transactionID: String
         dateTime: Date
@@ -95,6 +103,8 @@ classDiagram
     }
 
     POS_System --> Transaction
+    POS_System --> BarcodeScanner
+    BarcodeScanner --> Product
     Transaction --> Order
     Transaction --> Order_Items
     Transaction --> Product
@@ -103,6 +113,7 @@ classDiagram
     Order --> Refund
     Order --> DeliveryCharge
     Refund --> Invoice
+
 
 
 
