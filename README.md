@@ -110,3 +110,170 @@ erDiagram
     Refunds ||--o| Invoices : linked_to
     Products ||--o| Categories : belongs_to
     EndOfDayReport ||--o| Orders : summarizes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+classDiagram
+    class POS_System {
+        +String shopName
+        +String location
+        +startTransaction(): Transaction
+        +endOfDayReport(): EndOfDayReport
+    }
+
+    class Transaction {
+        +String transactionID
+        +Date dateTime
+        +double totalAmount
+        +String paymentMethod
+        +List<Product> products
+        +addProduct(product: Product): void
+        +calculateTotal(): double
+        +processPayment(payment: Payment): boolean
+        +generateReceipt(): Receipt
+        +removeProduct(product: Product): void
+    }
+
+    class Payment {
+        +String paymentID
+        +double amount
+        +String paymentMethod
+        +boolean processPayment(): boolean
+    }
+
+    class BarcodeScanner {
+        +String scannerID
+        +String connectionType
+        +scanBarcode(): String
+        +identifyProduct(barcode: String): Product
+    }
+
+    class Receipt {
+        +String receiptID
+        +String transactionID
+        +Date date
+        +generatePDF(): void
+    }
+
+    class EndOfDayReport {
+        +String reportID
+        +Date date
+        +double totalSales
+        +int totalTransactions
+        +double cashPayments
+        +double cardPayments
+        +generateReport(): void
+        +exportToPDF(): void
+        +sendReport(email: String): void
+    }
+
+    class GUI {
+        +String screenType
+        +String theme
+        +displayMenu(): void
+        +showTransactionDetails(transaction: Transaction): void
+        +printReceipt(receipt: Receipt): void
+    }
+
+    class User {
+        +String userID
+        +String name
+        +String role
+        +boolean login(username: String, password: String)
+    }
+
+    class Product {
+        +String productID
+        +String name
+        +double price
+        +int stockQuantity
+        +updateStock(quantity: int): void
+    }
+
+    class Customer {
+        +String customerID
+        +String name
+        +String email
+        +String contact
+        +int loyaltyPoints
+    }
+
+    class Order {
+        +String orderID
+        +Date orderDate
+        +double totalAmount
+        +String paymentStatus
+        +String orderType
+        +double taxAmount
+        +double finalAmount
+        +double discountAmount
+        +String deliveryType
+        +String orderStatus
+    }
+
+    class Order_Items {
+        +String orderItemID
+        +String orderID
+        +String productID
+        +int quantity
+        +double price
+        +double subtotal
+    }
+
+    class Invoice {
+        +String invoiceID
+        +String orderID
+        +Date dateIssued
+        +double subtotal
+        +double discount
+        +double taxAmount
+        +double finalAmount
+        +String customerID
+    }
+
+    class Refund {
+        +String refundID
+        +String orderID
+        +String invoiceID
+        +double refundAmount
+        +String refundReason
+        +Date refundDate
+        +String refundStatus
+    }
+
+    class DeliveryCharge {
+        +String chargeID
+        +String deliveryType
+        +double deliveryCost
+        +String deliveryAddress
+        +String orderID
+    }
+
+    %%% Relationships %%%
+    POS_System --> Transaction : "1 *"
+    Transaction --> Payment : "1 1"
+    Transaction --> Receipt : "1 1"
+    Transaction --> Order_Items : "1 *"
+    Transaction --> Product : "1 *"
+    Order_Items --> Product : "1 1"
+    Transaction --> Customer : "1 1"
+    Payment --> Order : "1 1"
+    Order --> Invoice : "1 1"
+    Order --> Refund : "1 *"
+    Order --> DeliveryCharge : "1 1"
+    Refund --> Invoice : "1 1"
+    BarcodeScanner --> Product : "1 1"
