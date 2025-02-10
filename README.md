@@ -40,6 +40,7 @@ erDiagram
         decimal final_amount
         decimal discount_amount
         varchar delivery_type
+        enum order_status
     }
 
     Order_Items {
@@ -113,9 +114,6 @@ erDiagram
     Products ||--o| Categories : belongs_to
     EndOfDayReport ||--o| Orders : summarizes
 
-
-## **2. UML Class Diagram**
-```mermaid
 classDiagram
     class POS_System {
         shopName: String
@@ -141,7 +139,50 @@ classDiagram
         orderID: String
         orderDate: Date
         totalAmount: double
+        paymentStatus: String
+        orderType: String
+        taxAmount: double
+        finalAmount: double
+        discountAmount: double
+        deliveryType: String
         orderStatus: String
+    }
+
+    class Order_Items {
+        orderItemID: String
+        orderID: String
+        productID: String
+        quantity: int
+        price: double
+        subtotal: double
+    }
+
+    class Payment {
+        paymentID: String
+        amount: double
+        paymentMethod: String
+        paymentStatus: String
+        paymentDate: Date
+        transactionID: String
+        processPayment(): boolean
+    }
+
+    class Refund {
+        refundID: String
+        orderID: String
+        invoiceID: String
+        refundAmount: double
+        refundReason: String
+        refundDate: Date
+        refundStatus: String
+    }
+
+    class DeliveryCharge {
+        chargeID: String
+        deliveryType: String
+        deliveryCost: double
+        deliveryAddress: String
+        orderID: String
     }
 
     class Product {
@@ -149,11 +190,25 @@ classDiagram
         name: String
         price: double
         stockQuantity: int
+        updateStock(quantity: int): void
+    }
+
+    class Invoice {
+        invoiceID: String
+        orderID: String
+        dateIssued: Date
+        subtotal: double
+        discount: double
+        taxAmount: double
+        finalAmount: double
     }
 
     POS_System --> Transaction
     Transaction --> Order
+    Transaction --> Order_Items
     Transaction --> Product
-
-
-
+    Transaction --> Payment
+    Order --> Invoice
+    Order --> Refund
+    Order --> DeliveryCharge
+    Refund --> Invoice
