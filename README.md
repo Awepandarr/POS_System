@@ -105,7 +105,7 @@ classDiagram
     Refund --> Invoice
 
 
-erDiagram
+%%erDiagram
     Customers {
         int customer_id PK
         varchar customer_name
