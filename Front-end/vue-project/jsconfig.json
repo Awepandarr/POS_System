@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "esnext",                            // Specify the ECMAScript target version
+    "module": "esnext",                            // Specify the module code generation method
+    "moduleResolution": "node",                    // Module resolution strategy
+    "lib": ["esnext", "dom"],                      // Include appropriate libraries
+    "jsx": "preserve",                             // Enable JSX support for Vue SFCs
+    "paths": {
+      "@/*": ["src/*"]                            // This is the alias for 'src' folder
+    },
+    "baseUrl": ".",                                // Base directory for relative paths
+    "esModuleInterop": true,                       // Enables default imports for CommonJS modules
+    "strict": true                                 // Enable strict type-checking options
+  },
+  "exclude": ["node_modules", "dist"]
+}
